@@ -9,10 +9,9 @@ app.get('/',(req,res)=>{
     return res.send("From Home Page");
 });
 
-app.get('about',(req,res)=>{
-    return res.send("From about Page");
+app.get('/about',(req,res)=>{
+    return res.send("From about Page"+' hey '+req.query.name+' you ');
 });
-
 
 function myHandler(req , res){
 
