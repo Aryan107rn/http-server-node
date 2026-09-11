@@ -10,7 +10,7 @@ app.get('/',(req,res)=>{
 });
 
 app.get('/about',(req,res)=>{
-    return res.send("From about Page"+' hey '+req.query.name+' you ');
+    return res.send("From about Page"+' hey '+req.query.name+' you are ' +req.query.age+' old ');
 });
 
 function myHandler(req , res){
