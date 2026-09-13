@@ -6,39 +6,38 @@ const app = express();
 
 const PORT = 8000;
 
-// app.get("/api/users", (req, res) => {
-//     return res.json(users);
-// });
+app.use(express.json());
 
-// app.get("/users", (req, res) => {
-
-//     const html = `
-//         <ul>
-//             ${users
-//                 .map((user) => `<li>${user.first_name}</li>`)
-//                 .join("")}
-//         </ul>
-//     `;
-
-//     return res.send(html);
-// });
-
-// app.get("/api/users/:id",(req,res)=>{
-//     const id = req.params.id;
-//     const user = user.find((user)=>user.id===id)
-// });
-// // :id is dynamic means 1,2,3,4,5,......
 app.route("/api/users/:id")
 
     .get((req, res) => {
         const id = Number(req.params.id);
+
         const user = users.find(user => user.id === id);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
 
         return res.json(user);
     })
 
     .post((req, res) => {
-        return res.send("POST request");
+        const body = req.body;
+
+        const newUser = {
+            ...body,
+            id: users.length + 1
+        };
+
+        users.push(newUser);
+
+        return res.status(201).json({
+            message: "User created",
+            user: newUser
+        });
     })
 
     .put((req, res) => {
@@ -52,6 +51,7 @@ app.route("/api/users/:id")
     .delete((req, res) => {
         return res.send("DELETE request");
     });
+
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 });
